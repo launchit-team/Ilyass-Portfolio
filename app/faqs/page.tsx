@@ -173,7 +173,7 @@ export default function FAQsPage() {
               Still Have Questions?
             </h2>
             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-              Don't hesitate to reach out. I'm here to help and would love to hear about your project!
+              Don&apos;t hesitate to reach out. I&apos;m here to help and would love to hear about your project!
             </p>
             <a
               href="/contact"

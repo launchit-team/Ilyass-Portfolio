@@ -58,8 +58,8 @@ export default function AboutPage() {
                 About Me
               </h1>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
-                Hello! I'm a professional photographer with a passion for capturing life's most
-                meaningful moments. For over 10 years, I've been helping individuals, couples, and
+                Hello! I&apos;m a professional photographer with a passion for capturing life&apos;s most
+                meaningful moments. For over 10 years, I&apos;ve been helping individuals, couples, and
                 businesses tell their stories through compelling visual imagery.
               </p>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
@@ -207,7 +207,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className="text-neutral-700 dark:text-neutral-300 italic leading-relaxed">
-                  "{testimonial.text}"
+                  &ldquo;{testimonial.text}&rdquo;
                 </p>
               </motion.div>
             ))}
@@ -229,7 +229,7 @@ export default function AboutPage() {
               Ready to Work Together?
             </h2>
             <p className="text-lg text-neutral-300 mb-8">
-              Let's discuss your photography needs and create something memorable.
+              Let&apos;s discuss your photography needs and create something memorable.
             </p>
             <a
               href="/contact"

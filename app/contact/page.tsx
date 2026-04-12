@@ -65,7 +65,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Let's discuss your photography needs and bring your vision to life
+            Let&apos;s discuss your photography needs and bring your vision to life
           </motion.p>
         </div>
       </section>
@@ -85,8 +85,8 @@ export default function ContactPage() {
                 Contact Information
               </h2>
               <p className="text-neutral-600 dark:text-neutral-400 mb-8 leading-relaxed">
-                I'd love to hear about your project and how I can help capture your special moments.
-                Fill out the form, and I'll get back to you within 24 hours.
+                I&apos;d love to hear about your project and how I can help capture your special moments.
+                Fill out the form, and I&apos;ll get back to you within 24 hours.
               </p>
 
               <div className="space-y-6 mb-8">
@@ -338,7 +338,7 @@ export default function ContactPage() {
                     className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg"
                   >
                     <p className="text-green-800 dark:text-green-200 font-medium">
-                      Thank you! Your message has been sent successfully. I'll get back to you soon.
+                      Thank you! Your message has been sent successfully. I&apos;ll get back to you soon.
                     </p>
                   </motion.div>
                 )}
