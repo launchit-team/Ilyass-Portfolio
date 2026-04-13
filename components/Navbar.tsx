@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +18,30 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = ['about', 'portfolio', 'contact'];
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: '-20% 0px -70% 0px' }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   const navLinks = [
-    { name: 'ABOUT', href: '/about' },
-    { name: 'PORTFOLIO', href: '/portfolio' },
-    { name: 'FAQS', href: '/faqs' },
-    { name: 'CONTACT', href: '/contact' },
+    { name: 'ABOUT', href: '#about', id: 'about' },
+    { name: 'PORTFOLIO', href: '#portfolio', id: 'portfolio' },
+    { name: 'CONTACT', href: '#contact', id: 'contact' },
   ];
 
   return (
@@ -44,7 +62,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
               >
-                JOHNNY·HARRIS
+                ILYAS·BATTAH
               </motion.h1>
               <div className="h-[2px] bg-[#D94F30] w-full mt-1"></div>
             </div>
@@ -53,17 +71,17 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
                 href={link.href}
                 className={`text-sm font-medium tracking-wider transition-colors duration-200 ${
-                  pathname === link.href
+                  activeSection === link.id
                     ? 'text-neutral-900'
                     : 'text-neutral-600 hover:text-neutral-900'
                 }`}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -110,17 +128,17 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Link
+                  <a
                     href={link.href}
                     className={`block py-3 text-sm font-medium tracking-wider transition-colors duration-200 ${
-                      pathname === link.href
+                      activeSection === link.id
                         ? 'text-neutral-900'
                         : 'text-neutral-600'
                     }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.name}
-                  </Link>
+                  </a>
                 </motion.div>
               ))}
             </div>

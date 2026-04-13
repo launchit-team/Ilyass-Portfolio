@@ -23,13 +23,13 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Johnny Harris | Journalist",
-  description: "Johnny Harris is a journalist based in Washington, DC. You can find his work on Vox, The New York Times, and his YouTube channel.",
-  keywords: ["journalist", "filmmaker", "youtube", "vox", "documentary"],
-  authors: [{ name: "Johnny Harris" }],
+  title: "Ilyas Battah | Portfolio",
+  description: "Portfolio of Ilyas Battah, Filmmaker & Visual Storyteller.",
+  keywords: ["ilyas battah", "portfolio", "filmmaker", "visual storyteller", "bh"],
+  authors: [{ name: "Ilyas Battah" }],
   openGraph: {
-    title: "Johnny Harris | Journalist",
-    description: "Journalist based in Washington, DC.",
+    title: "Ilyas Battah | Portfolio",
+    description: "Portfolio of Ilyas Battah, Filmmaker & Visual Storyteller.",
     type: "website",
   },
 };
@@ -41,6 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${caveat.variable}`}>
+      <head>
+        <link rel="icon" href="/bh-favicon.svg" type="image/svg+xml" />
+      </head>
       <body className="antialiased">
         <Navbar />
         <main className="min-h-screen">

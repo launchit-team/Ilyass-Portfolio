@@ -13,7 +13,6 @@ interface Photo {
   alt: string;
 }
 
-// Derived paths – thumbnails in /images/thumbs/, full in /images/full/
 function thumbAvif(name: string) { return `/images/thumbs/${name}.avif`; }
 function thumbWebp(name: string) { return `/images/thumbs/${name}.webp`; }
 function fullAvif(name: string) { return `/images/full/${name}.avif`; }
@@ -38,7 +37,7 @@ const photos: Photo[] = [
   { id: 16, name: 'GPTempDownload(15)',   alt: 'Photo 16' },
 ];
 
-export default function PortfolioPage() {
+const PortfolioSection = () => {
   const [activeTab, setActiveTab] = useState<Tab>('photos');
   const [selectedVideoCategory, setSelectedVideoCategory] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -63,7 +62,6 @@ export default function PortfolioPage() {
     setLightboxIndex((prev) => (prev !== null ? (prev + 1) % photos.length : null));
   }, []);
 
-  // Keyboard navigation
   useEffect(() => {
     if (lightboxIndex === null) return;
     const handleKey = (e: KeyboardEvent) => {
@@ -75,7 +73,6 @@ export default function PortfolioPage() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [lightboxIndex, goPrev, goNext, closeLightbox]);
 
-  // Auto-scroll thumbnail strip to active thumb
   useEffect(() => {
     if (lightboxIndex === null || !thumbStripRef.current) return;
     const strip = thumbStripRef.current;
@@ -91,59 +88,57 @@ export default function PortfolioPage() {
       : videos.filter((v) => v.category === selectedVideoCategory);
 
   return (
-    <div className="pt-20 bg-[#F0E8DA] min-h-screen">
+    <div className="bg-[#F0E8DA] min-h-screen">
       {/* Header */}
-      <section className="py-20 px-6 grid-bg">
+      <div className="py-20 px-6 grid-bg">
         <div className="container mx-auto max-w-6xl">
-          <motion.h1
+          <motion.h2
             className="text-5xl md:text-7xl font-serif font-bold text-neutral-900 mb-4"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             Portfolio
-          </motion.h1>
+          </motion.h2>
           <motion.p
             className="text-base text-neutral-600 max-w-xl"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
           >
-            A curated collection of photography and video work spanning documentary, travel, and editorial projects.
+            Photos / Videos (coming soon)
           </motion.p>
-        </div>
-      </section>
-
-      {/* Tab Navigation */}
-      <div className="sticky top-20 z-40 bg-[#F0E8DA]/95 backdrop-blur-sm border-b border-neutral-300">
-        <div className="container mx-auto max-w-6xl px-6">
-          <div className="flex gap-0">
-            {(['photos', 'videos'] as Tab[]).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`relative px-8 py-5 text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 ${
-                  activeTab === tab
-                    ? 'text-neutral-900'
-                    : 'text-neutral-400 hover:text-neutral-700'
-                }`}
-              >
-                {tab === 'photos' ? 'PHOTOS' : 'VIDEOS'}
-                {activeTab === tab && (
-                  <motion.div
-                    layoutId="tab-underline"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D94F30]"
-                  />
-                )}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* ── PHOTOS TAB ── */}
+      {/* Tab Navigation — hidden; videos preserved in code but not shown */}
+      <div className="hidden">
+        {(['photos', 'videos'] as Tab[]).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`relative px-8 py-5 text-xs font-medium tracking-[0.2em] uppercase transition-colors duration-200 ${
+              activeTab === tab
+                ? 'text-neutral-900'
+                : 'text-neutral-400 hover:text-neutral-700'
+            }`}
+          >
+            {tab === 'photos' ? 'PHOTOS' : 'VIDEOS'}
+            {activeTab === tab && (
+              <motion.div
+                layoutId="tab-underline"
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D94F30]"
+              />
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* ── PHOTOS TAB ── always shown; videos tab hidden but code preserved below */}
       <AnimatePresence mode="wait">
-        {activeTab === 'photos' && (
+        {(activeTab === 'photos' || activeTab !== 'videos') && (
           <motion.section
             key="photos"
             initial={{ opacity: 0, y: 20 }}
@@ -153,7 +148,6 @@ export default function PortfolioPage() {
             className="py-12 px-6"
           >
             <div className="container mx-auto max-w-7xl">
-              {/* Photo masonry grid */}
               <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
                 {photos.map((photo, index) => (
                   <motion.div
@@ -181,7 +175,6 @@ export default function PortfolioPage() {
                   </motion.div>
                 ))}
               </div>
-
               <p className="text-xs text-neutral-400 tracking-widest text-center mt-8 uppercase">
                 {photos.length} photos
               </p>
@@ -189,8 +182,8 @@ export default function PortfolioPage() {
           </motion.section>
         )}
 
-        {/* ── VIDEOS TAB ── */}
-        {activeTab === 'videos' && (
+        {/* ── VIDEOS TAB ── hidden from UI; re-enable by removing "false &&" */}
+        {false && activeTab === 'videos' && (
           <motion.section
             key="videos"
             initial={{ opacity: 0, y: 20 }}
@@ -200,7 +193,6 @@ export default function PortfolioPage() {
             className="py-12 px-6"
           >
             <div className="container mx-auto max-w-7xl">
-              {/* Category filter */}
               <div className="flex flex-wrap gap-3 mb-10">
                 {videoCategories.map((cat) => (
                   <button
@@ -217,7 +209,6 @@ export default function PortfolioPage() {
                 ))}
               </div>
 
-              {/* Video grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <AnimatePresence>
                   {filteredVideos.map((video, index) => (
@@ -230,7 +221,6 @@ export default function PortfolioPage() {
                       transition={{ duration: 0.3, delay: index * 0.05 }}
                       onClick={() => setActiveVideo(video)}
                     >
-                      {/* Thumbnail */}
                       <div className="relative aspect-video overflow-hidden bg-neutral-800 mb-3">
                         <Image
                           src={video.thumbnail}
@@ -238,9 +228,7 @@ export default function PortfolioPage() {
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        {/* Dark overlay */}
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
-                        {/* Play button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-200">
                             <svg className="w-5 h-5 text-neutral-900 ml-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -248,12 +236,10 @@ export default function PortfolioPage() {
                             </svg>
                           </div>
                         </div>
-                        {/* Duration badge */}
                         <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 font-mono">
                           {video.duration}
                         </div>
                       </div>
-                      {/* Meta */}
                       <p className="text-xs tracking-[0.15em] uppercase text-[#D94F30] mb-1">{video.category}</p>
                       <h3 className="text-sm font-medium text-neutral-900 leading-snug group-hover:text-neutral-600 transition-colors duration-200">
                         {video.title}
@@ -281,7 +267,6 @@ export default function PortfolioPage() {
             exit={{ opacity: 0 }}
             onClick={closeLightbox}
           >
-            {/* Close button */}
             <button
               className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors duration-200"
               onClick={closeLightbox}
@@ -291,14 +276,11 @@ export default function PortfolioPage() {
               </svg>
             </button>
 
-            {/* Counter */}
             <div className="absolute top-5 left-5 z-10 text-white/60 text-xs tracking-widest font-mono">
               {lightboxIndex + 1} / {photos.length}
             </div>
 
-            {/* Main image area + arrows */}
             <div className="flex-1 flex items-center justify-center relative px-16" onClick={closeLightbox}>
-              {/* Prev arrow */}
               <button
                 className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center text-white transition-colors duration-200"
                 onClick={(e) => { e.stopPropagation(); goPrev(); }}
@@ -308,7 +290,6 @@ export default function PortfolioPage() {
                 </svg>
               </button>
 
-              {/* Full-size image */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={lightboxIndex}
@@ -331,7 +312,6 @@ export default function PortfolioPage() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Next arrow */}
               <button
                 className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/10 hover:bg-white/25 rounded-full flex items-center justify-center text-white transition-colors duration-200"
                 onClick={(e) => { e.stopPropagation(); goNext(); }}
@@ -342,7 +322,6 @@ export default function PortfolioPage() {
               </button>
             </div>
 
-            {/* Thumbnail strip */}
             <div className="flex-shrink-0 py-3 px-4" onClick={(e) => e.stopPropagation()}>
               <div
                 ref={thumbStripRef}
@@ -425,4 +404,6 @@ export default function PortfolioPage() {
       </AnimatePresence>
     </div>
   );
-}
+};
+
+export default PortfolioSection;
