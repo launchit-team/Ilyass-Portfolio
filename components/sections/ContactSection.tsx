@@ -35,8 +35,8 @@ const ContactSection = () => {
   };
 
   const contactDetails = [
-    { label: 'Email', value: 'hello@ilyasbattah.com', href: 'mailto:hello@ilyasbattah.com' },
-    { label: 'Instagram', value: '@ilyasbattah', href: 'https://instagram.com/ilyasbattah' },
+    { label: 'Email', value: 'ilyasbatah2@gmail.com', href: 'mailto:ilyasbatah2@gmail.com' },
+    { label: 'Instagram', value: '@ilyas.povv', href: 'https://instagram.com/ilyas.povv' },
     { label: 'Location', value: 'Morocco', href: null },
   ];
 

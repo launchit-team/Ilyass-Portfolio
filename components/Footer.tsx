@@ -52,7 +52,7 @@ const Footer = () => {
                 className="lg:text-right"
               >
                 <a
-                  href="https://instagram.com/ilyasbattah"
+                  href="https://instagram.com/ilyas.povv"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-medium tracking-[0.15em] hover:text-neutral-300 transition-colors duration-200"
