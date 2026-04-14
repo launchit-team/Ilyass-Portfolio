@@ -63,7 +63,7 @@ export default function HomePage() {
                 <div className="relative bg-white p-3 shadow-2xl transform -rotate-1 z-10">
                   <div className="relative aspect-[4/5] bg-neutral-200 overflow-hidden">
                     <Image
-                      src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=1000&fit=crop"
+                      src="/images/Herosection.avif"
                       alt="Ilyas Battah"
                       fill
                       className="object-cover"
